@@ -2,6 +2,7 @@ import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RapierRigidBody, RigidBody, useRapier } from "@react-three/rapier";
 import { useState, useRef, useEffect } from "react";
+import { usePlayerStore } from "../Stores/usePlayerStore";
 
 const MOVE_SPEED = 50;
 const MAX_SPEED = 5;
@@ -12,6 +13,7 @@ export function Player() {
     const [maxSpeed, setMaxSpeed] = useState(MAX_SPEED);
     const { rapier, world } = useRapier();
 
+    const color = usePlayerStore((state) => state.color);
     // Subscribe to the keys
     useEffect(() => {
         const unsubscribeSprint = subscribeKeys(
@@ -96,10 +98,11 @@ export function Player() {
             colliders="ball"
             friction={1}
             ref={rigidBody}
+            userData={{ type: "player" }}
         >
             <mesh>
                 <icosahedronGeometry args={[1, 1]} />
-                <meshStandardMaterial color="orange" flatShading={true} />
+                <meshStandardMaterial color={color} flatShading={true} />
             </mesh>
         </RigidBody>
     );
