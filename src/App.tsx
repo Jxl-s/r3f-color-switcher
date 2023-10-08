@@ -20,8 +20,12 @@ export default function App() {
                 ]}
             >
                 <Canvas>
-                    <OrbitControls />
-                    <Physics debug>
+                    <OrbitControls
+                        makeDefault
+                        enablePan={false}
+                        // enableRotate={false}
+                    />
+                    <Physics debug gravity={[0, -18, 0]}>
                         <Experience />
                     </Physics>
                 </Canvas>
