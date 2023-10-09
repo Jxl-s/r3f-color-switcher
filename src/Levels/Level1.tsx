@@ -3,6 +3,7 @@ import { Player } from "../Components/Player";
 import { ColorSwitch } from "../Components/ColorSwitch";
 import { ColorWall } from "../Components/ColorWall";
 import { ObstacleWall } from "../Components/ObstacleWall";
+import { Goal } from "../Components/Goal";
 
 export function Level1() {
     return (
@@ -31,9 +32,16 @@ export function Level1() {
             <ObstacleWall position={[0, 6, -10]} size={[20, 4, 1]} />
             <ObstacleWall position={[10, 4, -10]} size={[1, 8, 30]} />
             <ObstacleWall position={[-10, 4, -10]} size={[1, 8, 30]} />
+            <ObstacleWall position={[0, 4, -24.5]} size={[20, 8, 1]} />
 
             {/* Player */}
             <Player />
+            <Goal
+                position={[0, 0, -21]}
+                size={[20, 1, 6]}
+                textScale={3}
+                text={"Tutorial"}
+            />
         </>
     );
 }

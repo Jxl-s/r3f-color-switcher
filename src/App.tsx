@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Experience } from "./Experience";
 import { Physics } from "@react-three/rapier";
 import { Lights } from "./Lights";
+import Effects from "./Effects";
 
 export default function App() {
     return (
@@ -24,8 +25,8 @@ export default function App() {
                     <OrbitControls makeDefault />
                     {/* <OrthographicCamera makeDefault position={[10, 0, 10]} /> */}
                     <Physics gravity={[0, -18, 0]}>
-                        <Sky />
                         <Lights />
+                        <Effects />
                         <Experience />
                     </Physics>
                 </Canvas>

@@ -101,11 +101,11 @@ export function Player() {
         const bodyPosition = rigidBody.current.translation();
 
         const _cameraPosition = { ...bodyPosition };
-        _cameraPosition.y += 3;
-        _cameraPosition.z += 6;
+        _cameraPosition.y += 8;
+        _cameraPosition.z += 4;
 
         const _cameraTarget = { ...bodyPosition };
-        _cameraTarget.y += 1;
+        _cameraTarget.y += 4;
 
         tempVec.set(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
         cameraPosition.lerp(tempVec, delta * 2);
