@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type Colors = "orange" | "greenyellow" | "mediumpurple" | "crimson";
+export type Colors = "white" | "orange" | "greenyellow" | "mediumpurple" | "crimson";
 
 interface PlayerStore {
     color: Colors;
@@ -8,6 +8,6 @@ interface PlayerStore {
 }
 
 export const usePlayerStore = create<PlayerStore>((set) => ({
-    color: "crimson",
+    color: "white",
     setColor: (color) => set({ color }),
 }));

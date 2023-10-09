@@ -12,7 +12,7 @@ import { Colors, usePlayerStore } from "../Stores/usePlayerStore";
 import gsap from "gsap";
 
 interface Props {
-    start: [number, number, number];
+    position: [number, number, number];
     color: Colors;
 }
 
@@ -28,7 +28,7 @@ const playSound = (sound: HTMLAudioElement) => {
     console.log("play sound");
 };
 
-export function ColorSwitch({ start, color }: Props) {
+export function ColorSwitch({ position, color }: Props) {
     const buttonRef = useRef<RapierRigidBody>(null);
     const playerColor = usePlayerStore((state) => state.color);
     const setPlayerColor = usePlayerStore((state) => state.setColor);
@@ -58,7 +58,7 @@ export function ColorSwitch({ start, color }: Props) {
         if (playerColor !== color) setPlayerColor(color);
 
         // Move the button down and play sound
-        animateButton(start[1] - 0.1);
+        animateButton(position[1] - 0.1);
         playSound(enterSound);
     };
 
@@ -67,26 +67,28 @@ export function ColorSwitch({ start, color }: Props) {
         if (!isPlayerCollision(payload)) return;
 
         // Move the button up and play sound
-        animateButton(start[1]);
+        animateButton(position[1]);
         playSound(exitSound);
     };
 
     return (
         <>
             {/* Base */}
-            <RigidBody type="fixed" position={start}>
+            <RigidBody type="fixed" position={position}>
                 <RoundedBox args={[2, 1, 2]} radius={0.1}>
-                    <meshStandardMaterial color="white" />
+                    <meshStandardMaterial color={playerColor === color ? "#666666" : "#FFFFFF"} />
                 </RoundedBox>
             </RigidBody>
 
             {/* Button */}
-            <RigidBody ref={buttonRef} type="kinematicPosition" position={start}>
+            <RigidBody ref={buttonRef} type="kinematicPosition" position={position}>
                 <RoundedBox args={[1.5, 1.5, 1.5]} radius={0.1}>
                     <meshStandardMaterial
                         color={color}
                         transparent={true}
                         opacity={playerColor === color ? 0.25 : 1}
+                        emissive={color}
+                        emissiveIntensity={0.25}
                     />
                 </RoundedBox>
             </RigidBody>
@@ -95,7 +97,7 @@ export function ColorSwitch({ start, color }: Props) {
             <CuboidCollider
                 sensor={true}
                 args={[0.5, 1, 0.5]}
-                position={start}
+                position={position}
                 onIntersectionEnter={onEnter}
                 onIntersectionExit={onExit}
             />

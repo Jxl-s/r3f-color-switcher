@@ -3,17 +3,23 @@ import { useFrame } from "@react-three/fiber";
 import { RapierRigidBody, RigidBody, useRapier } from "@react-three/rapier";
 import { useState, useRef, useEffect } from "react";
 import { usePlayerStore } from "../Stores/usePlayerStore";
+import * as THREE from "three";
 
-const MOVE_SPEED = 50;
+const MOVE_SPEED = 36;
 const MAX_SPEED = 5;
 const MAX_SPRINT_SPEED = 10;
 
+const tempVec = new THREE.Vector3();
 export function Player() {
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const [maxSpeed, setMaxSpeed] = useState(MAX_SPEED);
     const { rapier, world } = useRapier();
 
     const color = usePlayerStore((state) => state.color);
+
+    const [cameraPosition] = useState(new THREE.Vector3());
+    const [cameraTarget] = useState(new THREE.Vector3());
+
     // Subscribe to the keys
     useEffect(() => {
         const unsubscribeSprint = subscribeKeys(
@@ -39,7 +45,7 @@ export function Player() {
 
                 // If player is grounded, apply impulse
                 if (rayHit && rayHit.toi < 0.2) {
-                    const impulse = { x: 0, y: 50, z: 0 };
+                    const impulse = { x: 0, y: 36, z: 0 };
                     rigidBody.current?.applyImpulse(impulse, true);
                 }
             }
@@ -49,13 +55,14 @@ export function Player() {
             unsubscribeSprint();
             unsubscribeJump();
         };
-    }, []);
+    }, [subscribeKeys, rapier.Ray, world]);
 
     const rigidBody = useRef<RapierRigidBody>(null);
+
     useFrame((state, delta) => {
         if (!rigidBody.current) return;
 
-        // Destructure the keys
+        // Handle movement
         const { forward, backward, leftward, rightward } = getKeys();
 
         const impulseStrength = delta * MOVE_SPEED;
@@ -89,6 +96,25 @@ export function Player() {
         // Apply impulses
         rigidBody.current.applyImpulse(impulse, true);
         rigidBody.current.applyTorqueImpulse(torque, true);
+
+        // Handle camera
+        const bodyPosition = rigidBody.current.translation();
+
+        const _cameraPosition = { ...bodyPosition };
+        _cameraPosition.y += 3;
+        _cameraPosition.z += 6;
+
+        const _cameraTarget = { ...bodyPosition };
+        _cameraTarget.y += 1;
+
+        tempVec.set(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
+        cameraPosition.lerp(tempVec, delta * 2);
+
+        tempVec.set(_cameraTarget.x, _cameraTarget.y, _cameraTarget.z);
+        cameraTarget.lerp(tempVec, delta * 2);
+
+        state.camera.position.copy(cameraPosition);
+        state.camera.lookAt(cameraTarget);
     });
 
     return (
@@ -100,7 +126,7 @@ export function Player() {
             ref={rigidBody}
             userData={{ type: "player" }}
         >
-            <mesh>
+            <mesh castShadow>
                 <icosahedronGeometry args={[1, 1]} />
                 <meshStandardMaterial color={color} flatShading={true} />
             </mesh>
