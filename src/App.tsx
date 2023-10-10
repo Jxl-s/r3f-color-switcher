@@ -27,7 +27,7 @@ export default function App() {
                 <Suspense fallback={null}>
                     <Leva hidden={window.location.hash !== "#debug"} />
                     <Canvas shadows>
-                        <Physics gravity={[0, -18, 0]}>
+                        <Physics gravity={[0, -18, 0]} debug={window.location.hash === "#debug"}>
                             <Lights />
                             <Effects />
                             <Experience />

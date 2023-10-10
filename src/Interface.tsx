@@ -1,8 +1,5 @@
-import {
-    ColorNames,
-    LevelNames,
-    usePlayerStore,
-} from "./Stores/usePlayerStore";
+import { getLevelName } from "./Levels";
+import { ColorNames, usePlayerStore } from "./Stores/usePlayerStore";
 import { useControls } from "leva";
 
 export function Interface() {
@@ -10,8 +7,9 @@ export function Interface() {
     const color = usePlayerStore((state) => state.color);
     const intermission = usePlayerStore((state) => state.intermission);
     const nextLevel = usePlayerStore((state) => state.nextLevel);
-    const resetProgress = usePlayerStore((state) => state.resetProgress);
 
+    // TODO
+    const selectLevel = () => {}
     const { orbitControls } = useControls({
         orbitControls: false,
     });
@@ -23,7 +21,7 @@ export function Interface() {
                     <h1 className="absolute top-40 w-full text-center text-white text-6xl font-bold bg-black/50 py-4">
                         <span className="game-title">Color Switcher</span>
                         <p className="text-lg font-normal text-white/75 mt-1">
-                            Use colors to get through the obstacles
+                            Use colors to get through levels
                         </p>
                     </h1>
                     <h1 className="absolute bottom-0 w-full text-center text-white/50 text-xl bg-black/50 py-4">
@@ -42,14 +40,14 @@ export function Interface() {
                 <>
                     <div className="fixed bottom-0 left-0 w-full bg-black/50 p-4 flex justify-between">
                         <div className="text-xl font-semibold text-white w-1/3 text-start">
-                            Level {level}: {LevelNames[level]}
+                            Level {level}: {getLevelName(level)}
                         </div>
 
                         <button
-                            className="text-xl font-semibold text-red-400 hover:text-red-200 duration-100 w-1/3 text-center"
-                            onClick={resetProgress}
+                            className="text-xl font-semibold text-blue-400 hover:text-blue-200 duration-100 w-1/3 text-center"
+                            onClick={selectLevel}
                         >
-                            Reset Progress
+                            Select Level
                         </button>
                         <div className="text-xl font-semibold text-white w-1/3 text-end">
                             Color:{" "}
@@ -68,7 +66,7 @@ export function Interface() {
                                 Level cleared!
                             </h1>
                             <h1 className="text-2xl opacity-50">
-                                {level} - {LevelNames[level]}
+                                {level} - {getLevelName(level)}
                             </h1>
                             {/* <h1
                                 className="text-3xl font-bold"

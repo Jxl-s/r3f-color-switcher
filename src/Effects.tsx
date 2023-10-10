@@ -5,8 +5,8 @@ export default function Effects() {
         <>
             <EffectComposer disableNormalPass>
                 <Bloom
-                    luminanceThreshold={0.3}
-                    luminanceSmoothing={0.9}
+                    luminanceThreshold={0.5}
+                    luminanceSmoothing={2}
                     height={300}
                 />
             </EffectComposer>

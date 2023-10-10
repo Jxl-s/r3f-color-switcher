@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { Levels } from "../Levels";
 
 export const ColorsArray = [
     "white",
@@ -16,7 +17,6 @@ export const ColorNames = {
     crimson: "Red",
 };
 
-export const LevelNames = ["Tutorial", "Color Switch", "Choices", "To Be Continued..."];
 export type Colors = (typeof ColorsArray)[number];
 
 interface PlayerStore {
@@ -61,7 +61,10 @@ usePlayerStore.subscribe((state) => {
 });
 
 if (localStorage.getItem("cur_level")) {
+    let level = Number(localStorage.getItem("cur_level"));
+    if (level >= Levels.length) level = Levels.length - 1;
+
     usePlayerStore.setState({
-        level: Number(localStorage.getItem("cur_level")),
+        level,
     });
 }

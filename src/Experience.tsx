@@ -1,10 +1,11 @@
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { Welcome, Level1, Level2, MoreToCome } from "./Levels";
 import { usePlayerStore } from "./Stores/usePlayerStore";
 import { useControls } from "leva";
+import { getLevelComponent } from "./Levels";
 
 export function Experience() {
     const level = usePlayerStore((state) => state.level);
+    const LevelComponent = getLevelComponent(level);
 
     const { orbitControls } = useControls({
         orbitControls: false,
@@ -13,13 +14,10 @@ export function Experience() {
     return (
         <>
             {orbitControls && <OrbitControls />}
-            <PerspectiveCamera fov={90} makeDefault/>
+            <PerspectiveCamera fov={90} makeDefault />
 
             {/* TODO: Level selection logic */}
-            {level === 0 && <Welcome />}
-            {level === 1 && <Level1 />}
-            {level === 2 && <Level2 />}
-            {level === 3 && <MoreToCome />}
+            <LevelComponent />
         </>
     );
 }

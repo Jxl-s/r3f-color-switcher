@@ -20,14 +20,15 @@ export function Lights() {
                 ref={lightRef}
                 intensity={1.5}
                 shadow-mapSize={[1024, 1024]}
-                shadow-camera-near={1}
-                shadow-camera-far={10}
-                shadow-camera-top={10}
-                shadow-camera-right={10}
-                shadow-camera-bottom={-10}
-                shadow-camera-left={-10}
+                shadow-camera-near={0.2}
+                shadow-camera-far={20}
+                shadow-camera-top={20}
+                shadow-camera-right={20}
+                shadow-camera-bottom={-20}
+                shadow-camera-left={-20}
                 castShadow
             />
+            {lightRef.current && <directionalLightHelper light={lightRef.current} />}
             <ambientLight color={"lightblue"} intensity={0.8}/>
         </>
     );
