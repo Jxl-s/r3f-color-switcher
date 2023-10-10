@@ -6,7 +6,7 @@ import {
     ObstacleWall,
     Player,
 } from "../Components";
-import { Box, Float, Text } from "@react-three/drei";
+import DeathWall from "../Components/DeathWall";
 
 export default function Level2() {
     return (
@@ -40,7 +40,7 @@ export default function Level2() {
             <ObstacleWall position={[0, 7, -10]} size={[20, 2, 1]} />
 
             <ObstacleWall position={[-10, 4, -10]} size={[0.5, 8, 16]} />
-            <ObstacleWall position={[0, 4, -14.25]} size={[0.5, 8, 7.5]} />
+            <ObstacleWall position={[0, 4, -14.25]} size={[0.5, 8, 9.5]} />
             <ObstacleWall position={[10, 4, -10]} size={[0.5, 8, 16]} />
             <ObstacleWall position={[0, 4, -17.75]} size={[20, 9, 0.5]} />
 
@@ -53,6 +53,10 @@ export default function Level2() {
                 size={[10, 1, 7.5]}
                 textScale={1}
                 text={"Level 2"}
+            />
+            <DeathWall
+                position={[5, 0, -14]}
+                size={[10, 1, 7.5]}
             />
         </>
     );

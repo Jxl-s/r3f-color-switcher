@@ -26,6 +26,7 @@ export default function Player({ inputDisabled = false }: Props) {
     });
 
     const color = usePlayerStore((state) => state.color);
+    const setColor = usePlayerStore((state) => state.setColor);
 
     const [cameraPosition] = useState(new THREE.Vector3(0, 9, 4));
     const [cameraTarget] = useState(new THREE.Vector3(0, 1, 0));
@@ -70,6 +71,17 @@ export default function Player({ inputDisabled = false }: Props) {
     }, [subscribeKeys, rapier.Ray, world, inputDisabled]);
 
     const rigidBody = useRef<RapierRigidBody>(null);
+
+    const resetPlayer = () => {
+        if (!rigidBody.current) return;
+
+        rigidBody.current.setTranslation({ x: 0, y: 1, z: 0 }, true);
+        rigidBody.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+        rigidBody.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+
+        // Also change the color
+        setColor("white");
+    };
 
     useFrame((state, delta) => {
         if (!rigidBody.current) return;
@@ -138,9 +150,7 @@ export default function Player({ inputDisabled = false }: Props) {
 
         // Handle fall
         if (bodyPosition.y < -10) {
-            rigidBody.current.setTranslation({ x: 0, y: 1, z: 0 }, true);
-            rigidBody.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
-            rigidBody.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+            resetPlayer();
         }
     });
 
@@ -151,7 +161,7 @@ export default function Player({ inputDisabled = false }: Props) {
             colliders="ball"
             friction={1}
             ref={rigidBody}
-            userData={{ type: "player" }}
+            userData={{ type: "player", reset: resetPlayer }}
         >
             <mesh castShadow>
                 <icosahedronGeometry args={[1, 1]} />

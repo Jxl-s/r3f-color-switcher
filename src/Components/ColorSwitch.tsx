@@ -34,11 +34,8 @@ export default function ColorSwitch({ position, color }: Props) {
     const setPlayerColor = usePlayerStore((state) => state.setColor);
 
     const isPlayerCollision = (payload: CollisionPayload) => {
-        if (!payload.rigidBody?.userData) return false;
-        if ((payload.rigidBody.userData["type" as never] as unknown as string) !== "player")
-            return false;
-
-        return true;
+        const userData = payload.rigidBody?.userData as Record<string, unknown>;
+        return userData?.type === "player";
     };
 
     const animateButton = (y: number) => {
@@ -47,7 +44,12 @@ export default function ColorSwitch({ position, color }: Props) {
         // Animate the button
         const btnTr = buttonRef.current.translation();
         const onStep = () => buttonRef.current?.setTranslation(btnTr, true);
-        gsap.to(btnTr, { y, duration: 0.1, ease: "power1.out", onUpdate: onStep }).play();
+        gsap.to(btnTr, {
+            y,
+            duration: 0.1,
+            ease: "power1.out",
+            onUpdate: onStep,
+        }).play();
     };
 
     const onEnter = (payload: IntersectionEnterPayload) => {
@@ -76,12 +78,18 @@ export default function ColorSwitch({ position, color }: Props) {
             {/* Base */}
             <RigidBody type="fixed" position={position}>
                 <RoundedBox args={[2, 1, 2]} radius={0.1}>
-                    <meshStandardMaterial color={playerColor === color ? "#666666" : "#FFFFFF"} />
+                    <meshStandardMaterial
+                        color={playerColor === color ? "#666666" : "#FFFFFF"}
+                    />
                 </RoundedBox>
             </RigidBody>
 
             {/* Button */}
-            <RigidBody ref={buttonRef} type="kinematicPosition" position={position}>
+            <RigidBody
+                ref={buttonRef}
+                type="kinematicPosition"
+                position={position}
+            >
                 <RoundedBox args={[1.5, 1.5, 1.5]} radius={0.1}>
                     <meshStandardMaterial
                         color={color}

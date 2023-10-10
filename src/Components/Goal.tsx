@@ -26,15 +26,8 @@ export default function Goal({
     const nextLevel = usePlayerStore((state) => state.nextLevel);
 
     const isPlayerCollision = (payload: CollisionPayload) => {
-        if (!payload.rigidBody?.userData) return false;
-        if (
-            (payload.rigidBody.userData[
-                "type" as never
-            ] as unknown as string) !== "player"
-        )
-            return false;
-
-        return true;
+        const userData = payload.rigidBody?.userData as Record<string, unknown>;
+        return userData?.type === "player";
     };
 
     const onEnter = (payload: IntersectionEnterPayload) => {
