@@ -16,7 +16,7 @@ export const ColorNames = {
     crimson: "Red",
 };
 
-export const LevelNames = ["Tutorial", "Color Switch", "Choices"];
+export const LevelNames = ["Tutorial", "Color Switch", "Choices", "To Be Continued..."];
 export type Colors = (typeof ColorsArray)[number];
 
 interface PlayerStore {
@@ -31,6 +31,10 @@ interface PlayerStore {
     resetProgress: () => void;
 }
 
+// Play the win sound here
+const winAudio = new Audio("/sounds/win.wav");
+winAudio.volume = 0.5;
+
 export const usePlayerStore = create<PlayerStore>((set) => ({
     color: "white",
     setColor: (color) => set({ color }),
@@ -38,7 +42,10 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
     level: 0,
     intermission: false,
 
-    finishLevel: () => set({ intermission: true }),
+    finishLevel: () => {
+        winAudio.play();
+        set({ intermission: true });
+    },
     nextLevel: () =>
         set((state) => ({
             level: state.level + 1,

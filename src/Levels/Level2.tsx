@@ -5,8 +5,9 @@ import {
     Goal,
     ObstacleWall,
     Player,
+    DeathWall,
 } from "../Components";
-import DeathWall from "../Components/DeathWall";
+import { Float, Text } from "@react-three/drei";
 
 export default function Level2() {
     return (
@@ -23,6 +24,18 @@ export default function Level2() {
             <ColorSwitch position={[0, 0, -6]} color="crimson" />
             <ColorSwitch position={[6, 0, -6]} color="greenyellow" />
             <ColorSwitch position={[-6, 0, -6]} color="mediumpurple" />
+
+            <Float>
+                <Text
+                    position={[0, 2, -8]}
+                    scale={0.5}
+                    textAlign="center"
+                    font="/fonts/Poppins/Poppins-Light.ttf"
+                >
+                    Use [Space] to jump
+                    <meshBasicMaterial color="white" />
+                </Text>
+            </Float>
 
             {/* Walls */}
             <ObstacleWall position={[0, 1, -10]} size={[20, 2, 1]} />
@@ -54,10 +67,7 @@ export default function Level2() {
                 textScale={1}
                 text={"Level 2"}
             />
-            <DeathWall
-                position={[5, 0, -14]}
-                size={[10, 1, 7.5]}
-            />
+            <DeathWall position={[5, 0, -14]} size={[10, 1, 7.5]} />
         </>
     );
 }

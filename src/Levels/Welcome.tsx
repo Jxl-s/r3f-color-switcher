@@ -1,7 +1,7 @@
 import { RigidBody } from "@react-three/rapier";
 import { Goal, ObstacleWall, Player } from "../Components";
 
-export default function Level0() {
+export default function Welcome() {
     return (
         <>
             {/* Walls */}

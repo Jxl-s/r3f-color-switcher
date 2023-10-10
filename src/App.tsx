@@ -25,9 +25,8 @@ export default function App() {
                 ]}
             >
                 <Suspense fallback={null}>
-                    <Leva />
+                    <Leva hidden={window.location.hash !== "#debug"} />
                     <Canvas shadows>
-                        {/* <OrthographicCamera makeDefault position={[10, 0, 10]} /> */}
                         <Physics gravity={[0, -18, 0]}>
                             <Lights />
                             <Effects />

@@ -30,7 +30,8 @@ export function Interface() {
                         This project's source can be found on my{" "}
                         <a
                             href="https://github.com/Jxl-s/r3f-color-switcher"
-                            className="text-blue-400 font-bold"
+                            className="text-blue-400 font-bold hover:text-blue-300 duration-100"
+                            target="_blank"
                         >
                             GitHub
                         </a>
