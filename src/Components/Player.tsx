@@ -4,6 +4,7 @@ import { RapierRigidBody, RigidBody, useRapier } from "@react-three/rapier";
 import { useState, useRef, useEffect } from "react";
 import { usePlayerStore } from "../Stores/usePlayerStore";
 import * as THREE from "three";
+import { useControls } from "leva";
 
 const MOVE_SPEED = 36;
 const MAX_SPEED = 5;
@@ -19,6 +20,10 @@ export default function Player({ inputDisabled = false }: Props) {
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const [maxSpeed, setMaxSpeed] = useState(MAX_SPEED);
     const { rapier, world } = useRapier();
+
+    const { orbitControls } = useControls({
+        orbitControls: false,
+    });
 
     const color = usePlayerStore((state) => state.color);
 
@@ -106,24 +111,37 @@ export default function Player({ inputDisabled = false }: Props) {
             rigidBody.current.applyTorqueImpulse(torque, true);
         }
 
-        // Handle camera
         const bodyPosition = rigidBody.current.translation();
 
-        const _cameraPosition = { ...bodyPosition };
-        _cameraPosition.y += 8;
-        _cameraPosition.z += 4;
+        // Handle camera
+        if (!orbitControls) {
+            const _cameraPosition = { ...bodyPosition };
+            _cameraPosition.y += 8;
+            _cameraPosition.z += 4;
 
-        const _cameraTarget = { ...bodyPosition };
-        _cameraTarget.y += 4;
+            const _cameraTarget = { ...bodyPosition };
+            _cameraTarget.y += 4;
 
-        tempVec.set(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
-        cameraPosition.lerp(tempVec, delta * 2);
+            tempVec.set(
+                _cameraPosition.x,
+                _cameraPosition.y,
+                _cameraPosition.z
+            );
+            cameraPosition.lerp(tempVec, delta * 2);
 
-        tempVec.set(_cameraTarget.x, _cameraTarget.y, _cameraTarget.z);
-        cameraTarget.lerp(tempVec, delta * 2);
+            tempVec.set(_cameraTarget.x, _cameraTarget.y, _cameraTarget.z);
+            cameraTarget.lerp(tempVec, delta * 2);
 
-        state.camera.position.copy(cameraPosition);
-        state.camera.lookAt(cameraTarget);
+            state.camera.position.copy(cameraPosition);
+            state.camera.lookAt(cameraTarget);
+        }
+
+        // Handle fall
+        if (bodyPosition.y < -10) {
+            rigidBody.current.setTranslation({ x: 0, y: 1, z: 0 }, true);
+            rigidBody.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+            rigidBody.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+        }
     });
 
     return (

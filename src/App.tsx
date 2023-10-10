@@ -6,6 +6,7 @@ import { Lights } from "./Lights";
 import Effects from "./Effects";
 import { Interface } from "./Interface";
 import { Suspense } from "react";
+import { Leva } from "leva";
 
 export default function App() {
     return (
@@ -24,8 +25,8 @@ export default function App() {
                 ]}
             >
                 <Suspense fallback={null}>
+                    <Leva />
                     <Canvas shadows>
-                        <OrbitControls makeDefault />
                         {/* <OrthographicCamera makeDefault position={[10, 0, 10]} /> */}
                         <Physics gravity={[0, -18, 0]}>
                             <Lights />

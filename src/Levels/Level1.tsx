@@ -54,7 +54,7 @@ export default function Level1() {
                 position={[0, 0, -21]}
                 size={[20, 1, 6]}
                 textScale={3}
-                text={"Tutorial"}
+                text={"Level 2"}
             />
         </>
     );

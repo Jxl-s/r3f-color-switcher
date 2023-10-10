@@ -16,7 +16,7 @@ export const ColorNames = {
     crimson: "Red",
 };
 
-export const LevelNames = ["Tutorial", "Color Switch"];
+export const LevelNames = ["Tutorial", "Color Switch", "Choices"];
 export type Colors = (typeof ColorsArray)[number];
 
 interface PlayerStore {
@@ -28,6 +28,7 @@ interface PlayerStore {
 
     finishLevel: () => void;
     nextLevel: () => void;
+    resetProgress: () => void;
 }
 
 export const usePlayerStore = create<PlayerStore>((set) => ({
@@ -38,5 +39,22 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
     intermission: false,
 
     finishLevel: () => set({ intermission: true }),
-    nextLevel: () => set((state) => ({ level: state.level + 1, intermission: false })),
+    nextLevel: () =>
+        set((state) => ({
+            level: state.level + 1,
+            intermission: false,
+            color: "white",
+        })),
+
+    resetProgress: () => set({ level: 0, intermission: false, color: "white" }),
 }));
+
+usePlayerStore.subscribe((state) => {
+    localStorage.setItem("cur_level", state.level.toString());
+});
+
+if (localStorage.getItem("cur_level")) {
+    usePlayerStore.setState({
+        level: Number(localStorage.getItem("cur_level")),
+    });
+}

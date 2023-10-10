@@ -61,8 +61,9 @@ export default function Goal({
                 </mesh>
                 <Text
                     font="/fonts/Poppins/Poppins-Bold.ttf"
-                    position={[0.75, 0.6, 0]}
+                    position={[0, 0.6, 0]}
                     rotation-x={-0.5 * Math.PI}
+                    textAlign="center"
                     scale={textScale ?? 1}
                 >
                     {text}
