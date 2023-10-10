@@ -9,7 +9,7 @@ interface Props {
     size: [number, number, number];
 }
 
-export function ColorWall({ color, position, size }: Props) {
+export default function ColorWall({ color, position, size }: Props) {
     const playerColor = usePlayerStore((state) => state.color);
     const rigidBody = useRef<RapierRigidBody>(null);
 

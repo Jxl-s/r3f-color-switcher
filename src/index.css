@@ -1,9 +1,31 @@
+/* Load font faces */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
-#root {
+#root,
+.interface {
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+@keyframes TITLE_TEXT {
+    from {color: white;}
+    20% {color: orange;}
+    40% {color: greenyellow;}
+    60% {color: mediumpurple;}
+    80% {color: crimson;}
+    100% {color: white;}
+}
+
+.game-title {
+    animation:  5s linear 0s infinite TITLE_TEXT;
 }

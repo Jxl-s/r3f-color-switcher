@@ -1,9 +1,11 @@
-import { KeyboardControls, OrbitControls, Sky } from "@react-three/drei";
+import { KeyboardControls, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./Experience";
 import { Physics } from "@react-three/rapier";
 import { Lights } from "./Lights";
 import Effects from "./Effects";
+import { Interface } from "./Interface";
+import { Suspense } from "react";
 
 export default function App() {
     return (
@@ -21,15 +23,18 @@ export default function App() {
                     { keys: ["ShiftLeft", "ShiftRight"], name: "sprint" },
                 ]}
             >
-                <Canvas shadows>
-                    <OrbitControls makeDefault />
-                    {/* <OrthographicCamera makeDefault position={[10, 0, 10]} /> */}
-                    <Physics gravity={[0, -18, 0]}>
-                        <Lights />
-                        <Effects />
-                        <Experience />
-                    </Physics>
-                </Canvas>
+                <Suspense fallback={null}>
+                    <Canvas shadows>
+                        <OrbitControls makeDefault />
+                        {/* <OrthographicCamera makeDefault position={[10, 0, 10]} /> */}
+                        <Physics gravity={[0, -18, 0]}>
+                            <Lights />
+                            <Effects />
+                            <Experience />
+                        </Physics>
+                    </Canvas>
+                    <Interface />
+                </Suspense>
             </KeyboardControls>
         </>
     );

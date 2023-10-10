@@ -28,7 +28,7 @@ const playSound = (sound: HTMLAudioElement) => {
     console.log("play sound");
 };
 
-export function ColorSwitch({ position, color }: Props) {
+export default function ColorSwitch({ position, color }: Props) {
     const buttonRef = useRef<RapierRigidBody>(null);
     const playerColor = usePlayerStore((state) => state.color);
     const setPlayerColor = usePlayerStore((state) => state.setColor);

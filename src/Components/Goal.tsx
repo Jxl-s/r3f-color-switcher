@@ -11,10 +11,19 @@ interface Props {
     size: [number, number, number];
     textScale?: number;
     text: string;
+
+    noIntermission?: boolean;
 }
 
-export function Goal({ position, size, textScale, text }: Props) {
+export default function Goal({
+    position,
+    size,
+    textScale,
+    text,
+    noIntermission = false,
+}: Props) {
     const finishLevel = usePlayerStore((state) => state.finishLevel);
+    const nextLevel = usePlayerStore((state) => state.nextLevel);
 
     const isPlayerCollision = (payload: CollisionPayload) => {
         if (!payload.rigidBody?.userData) return false;
@@ -30,7 +39,12 @@ export function Goal({ position, size, textScale, text }: Props) {
 
     const onEnter = (payload: IntersectionEnterPayload) => {
         if (!isPlayerCollision(payload)) return;
-        finishLevel();
+
+        if (noIntermission) {
+            nextLevel();
+        } else {
+            finishLevel();
+        }
     };
 
     return (

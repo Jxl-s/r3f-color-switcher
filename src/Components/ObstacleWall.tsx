@@ -6,7 +6,7 @@ interface Props {
     size: [number, number, number];
 }
 
-export function ObstacleWall({ position, size }: Props) {
+export default function ObstacleWall({ position, size }: Props) {
     return (
         <RigidBody type="fixed">
             <Box position={position} args={size} receiveShadow>

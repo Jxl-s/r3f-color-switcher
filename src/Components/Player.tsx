@@ -10,18 +10,25 @@ const MAX_SPEED = 5;
 const MAX_SPRINT_SPEED = 10;
 
 const tempVec = new THREE.Vector3();
-export function Player() {
+
+interface Props {
+    inputDisabled?: boolean;
+}
+
+export default function Player({ inputDisabled = false }: Props) {
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const [maxSpeed, setMaxSpeed] = useState(MAX_SPEED);
     const { rapier, world } = useRapier();
 
     const color = usePlayerStore((state) => state.color);
 
-    const [cameraPosition] = useState(new THREE.Vector3());
-    const [cameraTarget] = useState(new THREE.Vector3());
+    const [cameraPosition] = useState(new THREE.Vector3(0, 9, 4));
+    const [cameraTarget] = useState(new THREE.Vector3(0, 1, 0));
 
     // Subscribe to the keys
     useEffect(() => {
+        if (inputDisabled) return;
+
         const unsubscribeSprint = subscribeKeys(
             (state) => state.sprint,
             (sprinting) => {
@@ -55,7 +62,7 @@ export function Player() {
             unsubscribeSprint();
             unsubscribeJump();
         };
-    }, [subscribeKeys, rapier.Ray, world]);
+    }, [subscribeKeys, rapier.Ray, world, inputDisabled]);
 
     const rigidBody = useRef<RapierRigidBody>(null);
 
@@ -63,39 +70,41 @@ export function Player() {
         if (!rigidBody.current) return;
 
         // Handle movement
-        const { forward, backward, leftward, rightward } = getKeys();
+        if (!inputDisabled) {
+            const { forward, backward, leftward, rightward } = getKeys();
 
-        const impulseStrength = delta * MOVE_SPEED;
-        const torqueStrength = delta * MOVE_SPEED;
+            const impulseStrength = delta * MOVE_SPEED;
+            const torqueStrength = delta * MOVE_SPEED;
 
-        // Calculate directions
-        const linVel = rigidBody.current.linvel();
-        const impulse = { x: 0, y: 0, z: 0 };
-        const torque = { x: 0, y: 0, z: 0 };
+            // Calculate directions
+            const linVel = rigidBody.current.linvel();
+            const impulse = { x: 0, y: 0, z: 0 };
+            const torque = { x: 0, y: 0, z: 0 };
 
-        if (leftward && linVel.x > -maxSpeed) {
-            impulse.x -= impulseStrength;
-            torque.z += torqueStrength;
+            if (leftward && linVel.x > -maxSpeed) {
+                impulse.x -= impulseStrength;
+                torque.z += torqueStrength;
+            }
+
+            if (rightward && linVel.x < maxSpeed) {
+                impulse.x += impulseStrength;
+                torque.z -= torqueStrength;
+            }
+
+            if (forward && linVel.z > -maxSpeed) {
+                impulse.z -= impulseStrength;
+                torque.x -= torqueStrength;
+            }
+
+            if (backward && linVel.z < maxSpeed) {
+                impulse.z += impulseStrength;
+                torque.x += torqueStrength;
+            }
+
+            // Apply impulses
+            rigidBody.current.applyImpulse(impulse, true);
+            rigidBody.current.applyTorqueImpulse(torque, true);
         }
-
-        if (rightward && linVel.x < maxSpeed) {
-            impulse.x += impulseStrength;
-            torque.z -= torqueStrength;
-        }
-
-        if (forward && linVel.z > -maxSpeed) {
-            impulse.z -= impulseStrength;
-            torque.x -= torqueStrength;
-        }
-
-        if (backward && linVel.z < maxSpeed) {
-            impulse.z += impulseStrength;
-            torque.x += torqueStrength;
-        }
-
-        // Apply impulses
-        rigidBody.current.applyImpulse(impulse, true);
-        rigidBody.current.applyTorqueImpulse(torque, true);
 
         // Handle camera
         const bodyPosition = rigidBody.current.translation();

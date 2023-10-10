@@ -1,11 +1,14 @@
 import { RigidBody } from "@react-three/rapier";
-import { Player } from "../Components/Player";
-import { ColorSwitch } from "../Components/ColorSwitch";
-import { ColorWall } from "../Components/ColorWall";
-import { ObstacleWall } from "../Components/ObstacleWall";
-import { Goal } from "../Components/Goal";
+import {
+    ColorSwitch,
+    ColorWall,
+    Goal,
+    ObstacleWall,
+    Player,
+} from "../Components";
+import { Float, Text } from "@react-three/drei";
 
-export function Level1() {
+export default function Level1() {
     return (
         <>
             {/* Walls */}
@@ -18,6 +21,17 @@ export function Level1() {
 
             {/* Switches */}
             <ColorSwitch position={[0, 0, -6]} color="crimson" />
+            <Float floatIntensity={0.5} rotationIntensity={2}>
+                <Text
+                    position={[0, 3, -6]}
+                    scale={0.5}
+                    textAlign="center"
+                    font="/fonts/Poppins/Poppins-Light.ttf"
+                >
+                    Touch to change color
+                    <meshBasicMaterial color="white" />
+                </Text>
+            </Float>
 
             {/* Obstacles */}
             <ColorWall
