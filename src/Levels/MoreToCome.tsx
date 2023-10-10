@@ -1,5 +1,5 @@
 import { RigidBody } from "@react-three/rapier";
-import { Goal, ObstacleWall, Player } from "../Components";
+import { ObstacleWall, Player } from "../Components";
 import { Float, Text } from "@react-three/drei";
 
 export default function MoreToCome() {

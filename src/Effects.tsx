@@ -1,10 +1,4 @@
-import {
-    Bloom,
-    DepthOfField,
-    EffectComposer,
-    Noise,
-    Vignette,
-} from "@react-three/postprocessing";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 
 export default function Effects() {
     return (

@@ -1,4 +1,4 @@
-import { KeyboardControls, OrbitControls } from "@react-three/drei";
+import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./Experience";
 import { Physics } from "@react-three/rapier";
