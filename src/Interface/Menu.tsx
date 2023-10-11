@@ -26,6 +26,7 @@ function MenuButton({
 }
 
 export function Menu() {
+    const toggleMenu = usePlayerStore((state) => state.toggleMenu);
     const setLevel = usePlayerStore((state) => state.setLevel);
     const bestLevel = usePlayerStore((state) => state.bestLevel);
 
@@ -75,6 +76,7 @@ export function Menu() {
                                                 }`}
                                                 disabled={index > bestLevel}
                                                 onClick={() => {
+                                                    toggleMenu();
                                                     setLevel(index);
                                                 }}
                                             >
