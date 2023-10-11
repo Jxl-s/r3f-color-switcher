@@ -8,8 +8,15 @@ import { Interface } from "./Interface";
 import { Suspense } from "react";
 import { Leva } from "leva";
 import { Perf } from "r3f-perf";
+import { useEffect } from "react";
 
 export default function App() {
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => e.preventDefault();
+        window.addEventListener("keydown", onKeyDown);
+
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, []);
     return (
         <>
             <KeyboardControls
