@@ -80,7 +80,7 @@ export default function Player({ inputDisabled = false }: Props) {
         rigidBody.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
 
         // Also change the color
-        setColor("white");
+        setTimeout(() => setColor("white"), 100);
     };
 
     useFrame((state, delta) => {

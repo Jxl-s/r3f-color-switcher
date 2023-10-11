@@ -22,11 +22,7 @@ enterSound.volume = 0.5;
 const exitSound = new Audio("/sounds/button_exit.mp3");
 exitSound.volume = 0.25;
 
-const playSound = (sound: HTMLAudioElement) => {
-    sound.play();
-
-    console.log("play sound");
-};
+const playSound = (sound: HTMLAudioElement) => sound.play();
 
 export default function ColorSwitch({ position, color }: Props) {
     const buttonRef = useRef<RapierRigidBody>(null);

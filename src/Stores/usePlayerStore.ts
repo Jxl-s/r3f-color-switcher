@@ -29,6 +29,10 @@ interface PlayerStore {
     finishLevel: () => void;
     nextLevel: () => void;
     resetProgress: () => void;
+
+    // UI Management
+    menuOpened: boolean;
+    openMenu: () => void;
 }
 
 // Play the win sound here
@@ -41,11 +45,12 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
 
     level: 0,
     intermission: false,
+    finishLevel: () =>
+        set((state) => {
+            if (!state.intermission) winAudio.play();
+            return { intermission: true };
+        }),
 
-    finishLevel: () => {
-        if (!usePlayerStore.getState().intermission) winAudio.play();
-        set({ intermission: true });
-    },
     nextLevel: () =>
         set((state) => ({
             level: state.level + 1,
@@ -54,6 +59,10 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
         })),
 
     resetProgress: () => set({ level: 0, intermission: false, color: "white" }),
+
+    // UI Management
+    menuOpened: false,
+    openMenu: () => set((state) => ({ menuOpened: !state.menuOpened })),
 }));
 
 usePlayerStore.subscribe((state) => {

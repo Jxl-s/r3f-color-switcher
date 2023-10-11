@@ -12,7 +12,6 @@ export default function MoreToCome() {
     const resetProgress = usePlayerStore((state) => state.resetProgress);
 
     const onMenuEnter = (payload: CollisionPayload) => {
-        console.log("entered");
         const userData = payload.rigidBody?.userData as Record<string, unknown>;
         if (!userData) return;
         if (userData.type !== "player") return;

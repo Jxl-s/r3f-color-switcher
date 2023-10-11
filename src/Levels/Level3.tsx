@@ -1,5 +1,5 @@
 import { RigidBody } from "@react-three/rapier";
-import { Goal, ObstacleWall, Player, DeathWall, JumpPad } from "../Components";
+import { Goal, ObstacleWall, Player, DeathWall, JumpPad, ColorSwitch, ColorWall } from "../Components";
 import { Float, Text } from "@react-three/drei";
 
 export default function Level3() {
@@ -16,9 +16,25 @@ export default function Level3() {
             <ObstacleWall position={[0, 4, -8]} size={[20, 8, 5]} />
 
             {/* Lava platforms */}
-            <ObstacleWall position={[-4, 1, -16]} size={[5, 1, 5]} />
-            <ObstacleWall position={[4, 1, -28]} size={[5, 1, 5]} />
-            <ObstacleWall position={[-2, 1, -40]} size={[5, 1, 5]} />
+            <ColorWall
+                position={[-4, 1, -16]}
+                size={[5, 1, 5]}
+                color="mediumpurple"
+            />
+            <ColorWall
+                position={[4, 1, -28]}
+                size={[5, 1, 5]}
+                color="mediumpurple"
+            />
+            <ColorWall
+                position={[-2, 1, -40]}
+                size={[5, 1, 5]}
+                color="mediumpurple"
+            />
+
+            <ColorSwitch position={[-5, 1.25, -17]} color="mediumpurple" />
+            <ColorSwitch position={[5, 1.25, -29]} color="mediumpurple" />
+            <ColorSwitch position={[-2, 1.25, -40]} color="mediumpurple" />
 
             <ObstacleWall position={[0, 1, -50]} size={[20, 1, 5]} />
             <DeathWall position={[0, 0.5, -30.5]} size={[19, 1, 40]} />
