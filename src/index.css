@@ -46,3 +46,12 @@ body {
 .game-title {
     animation: 5s linear 0s infinite TITLE_TEXT;
 }
+
+.hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}

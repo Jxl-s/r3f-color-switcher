@@ -7,7 +7,7 @@ export function IntermissionUI() {
 
     return (
         <>
-            <div className="w-full h-full bg-black/50 flex justify-center align-middle">
+            <div className="w-full h-full bg-black/50 flex justify-center items-center">
                 <div className="m-auto text-center text-white">
                     <h1 className="text-5xl font-bold">Level cleared!</h1>
                     <h1 className="text-2xl opacity-50 mt-2">

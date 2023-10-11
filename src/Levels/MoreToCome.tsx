@@ -9,14 +9,14 @@ import { Barrier, Bench, Tree_1 } from "../Models";
 import { usePlayerStore } from "../Stores/usePlayerStore";
 
 export default function MoreToCome() {
-    const resetProgress = usePlayerStore((state) => state.resetProgress);
+    const setLevel = usePlayerStore((state) => state.setLevel);
 
     const onMenuEnter = (payload: CollisionPayload) => {
         const userData = payload.rigidBody?.userData as Record<string, unknown>;
         if (!userData) return;
         if (userData.type !== "player") return;
 
-        resetProgress();
+        setLevel(0);
     };
 
     return (

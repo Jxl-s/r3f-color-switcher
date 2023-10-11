@@ -8,7 +8,7 @@ export function WelcomeUI() {
                 </p>
             </h1>
             <h1 className="absolute bottom-0 w-full text-center text-white/50 text-xl bg-black/50 py-4">
-                This project's source can be found on my{" "}
+                This project's source code can be found on my{" "}
                 <a
                     href="https://github.com/Jxl-s/r3f-color-switcher"
                     className="text-blue-400 font-bold hover:text-blue-300 duration-100"

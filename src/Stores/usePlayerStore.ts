@@ -24,15 +24,16 @@ interface PlayerStore {
     setColor: (color: Colors) => void;
 
     level: number;
+    bestLevel: number;
     intermission: boolean;
 
     finishLevel: () => void;
     nextLevel: () => void;
-    resetProgress: () => void;
+    setLevel: (level: number) => void;
 
     // UI Management
     menuOpened: boolean;
-    openMenu: () => void;
+    toggleMenu: () => void;
 }
 
 // Play the win sound here
@@ -44,6 +45,8 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
     setColor: (color) => set({ color }),
 
     level: 0,
+    bestLevel: 0,
+
     intermission: false,
     finishLevel: () =>
         set((state) => {
@@ -52,28 +55,52 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
         }),
 
     nextLevel: () =>
-        set((state) => ({
-            level: state.level + 1,
+        set((state) => {
+            return {
+                level: state.level + 1,
+                bestLevel: Math.max(state.level + 1, state.bestLevel),
+                intermission: false,
+                color: "white",
+            };
+        }),
+
+    setLevel: (level) =>
+        set({
+            level,
             intermission: false,
             color: "white",
-        })),
-
-    resetProgress: () => set({ level: 0, intermission: false, color: "white" }),
+        }),
 
     // UI Management
     menuOpened: false,
-    openMenu: () => set((state) => ({ menuOpened: !state.menuOpened })),
+    toggleMenu: () => set((state) => ({ menuOpened: !state.menuOpened })),
 }));
 
 usePlayerStore.subscribe((state) => {
+    // If the level is higher than the highest level, set it to the highest level
+    const highestLevel = Number(localStorage.getItem("best_level") ?? "0");
+    if (state.level > highestLevel) {
+        localStorage.setItem("best_level", state.level.toString());
+    }
+
     localStorage.setItem("cur_level", state.level.toString());
 });
 
+// Loading level
 if (localStorage.getItem("cur_level")) {
     let level = Number(localStorage.getItem("cur_level"));
     if (level >= Levels.length) level = Levels.length - 1;
 
     usePlayerStore.setState({
         level,
+    });
+}
+
+// Loading level
+if (localStorage.getItem("best_level")) {
+    const bestLevel = Number(localStorage.getItem("best_level"));
+
+    usePlayerStore.setState({
+        bestLevel,
     });
 }
