@@ -21,3 +21,21 @@ export const useSettingsStore = create<SettingsStore>((set) => ({
     setSoundEffects: (soundEffects: boolean) => set({ soundEffects }),
     setInstantLevel: (instantLevel: boolean) => set({ instantLevel }),
 }));
+
+// Load from local storage
+const gameSettings = localStorage.getItem("game_settings");
+if (gameSettings) {
+    const settingsJson = JSON.parse(gameSettings);
+    useSettingsStore.setState({
+        soundEffects: settingsJson.soundEffects,
+        instantLevel: settingsJson.instantLevel,
+    });
+}
+
+useSettingsStore.subscribe((state) => {
+    // Save settings
+    localStorage.setItem("game_settings", JSON.stringify({
+        soundEffects: state.soundEffects,
+        instantLevel: state.instantLevel,
+    }));
+});
