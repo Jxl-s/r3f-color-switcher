@@ -10,19 +10,22 @@ import { useRef } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { Colors, usePlayerStore } from "../Stores/usePlayerStore";
 import gsap from "gsap";
+import { SoundPlayer } from "../Util/SoundPlayer";
 
 interface Props {
     position: [number, number, number];
     color: Colors;
 }
 
-const enterSound = new Audio("/sounds/button_enter.mp3");
-enterSound.volume = 0.5;
+const enterSound = new SoundPlayer({
+    path: "/sounds/button_enter.mp3",
+    volume: 0.5,
+});
 
-const exitSound = new Audio("/sounds/button_exit.mp3");
-exitSound.volume = 0.25;
-
-const playSound = (sound: HTMLAudioElement) => sound.play();
+const exitSound = new SoundPlayer({
+    path: "/sounds/button_exit.mp3",
+    volume: 0.25,
+});
 
 export default function ColorSwitch({ position, color }: Props) {
     const buttonRef = useRef<RapierRigidBody>(null);
@@ -57,7 +60,7 @@ export default function ColorSwitch({ position, color }: Props) {
 
         // Move the button down and play sound
         animateButton(position[1] - 0.1);
-        playSound(enterSound);
+        enterSound.play();
     };
 
     const onExit = (payload: IntersectionExitPayload) => {
@@ -66,7 +69,7 @@ export default function ColorSwitch({ position, color }: Props) {
 
         // Move the button up and play sound
         animateButton(position[1]);
-        playSound(exitSound);
+        exitSound.play();
     };
 
     return (

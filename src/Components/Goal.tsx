@@ -5,6 +5,7 @@ import {
 } from "@react-three/rapier";
 import { usePlayerStore } from "../Stores/usePlayerStore";
 import { Text } from "@react-three/drei";
+import { useSettingsStore } from "../Stores/useSettingsStore";
 
 interface Props {
     position: [number, number, number];
@@ -24,6 +25,7 @@ export default function Goal({
 }: Props) {
     const finishLevel = usePlayerStore((state) => state.finishLevel);
     const nextLevel = usePlayerStore((state) => state.nextLevel);
+    const instantLevel = useSettingsStore((state) => state.instantLevel);
 
     const isPlayerCollision = (payload: CollisionPayload) => {
         const userData = payload.rigidBody?.userData as Record<string, unknown>;
@@ -33,7 +35,9 @@ export default function Goal({
     const onEnter = (payload: IntersectionEnterPayload) => {
         if (!isPlayerCollision(payload)) return;
 
-        if (noIntermission) {
+        // If there's the noIntermission flag, skip the intermission
+        // If the player has instantLevel setting, skip it
+        if (noIntermission || instantLevel) {
             nextLevel();
         } else {
             finishLevel();

@@ -40,7 +40,7 @@ export default function Level3() {
             <ColorSwitch position={[0, 4.95, -24]} color="mediumpurple" />
             <ColorSwitch position={[4, 4.95, -25]} color="mediumpurple" />
 
-            <ColorSwitch position={[-4, 4.95, -31]} color="mediumpurple" />
+            <ColorSwitch position={[-2.5, 4.95, -33]} color="mediumpurple" />
             <ColorSwitch position={[0, 4.95, -34]} color="mediumpurple" />
             <ColorSwitch position={[2, 4.95, -35]} color="mediumpurple" />
             <ColorSwitch position={[4, 4.95, -30]} color="mediumpurple" />

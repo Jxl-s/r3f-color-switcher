@@ -6,10 +6,16 @@ import {
 } from "@react-three/rapier";
 import gsap from "gsap";
 import { useState, useRef, useEffect } from "react";
+import { SoundPlayer } from "../Util/SoundPlayer";
 
 interface Props {
     position: [number, number, number];
 }
+
+const jumpAudio = new SoundPlayer({
+    path: "/sounds/jump_pad.mp3",
+    offset: 0.15,
+});
 
 export default function JumpPad({ position }: Props) {
     const [canUse, setCanUse] = useState(true);
@@ -45,6 +51,7 @@ export default function JumpPad({ position }: Props) {
         body.setLinvel({ x: linvel.x, y: 0, z: linvel.z }, true);
         body.applyImpulse(force, true);
 
+        jumpAudio.play();
         setCanUse(false);
         setTimeout(() => setCanUse(true), 1000);
     };

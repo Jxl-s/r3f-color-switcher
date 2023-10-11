@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Levels } from "../Levels";
+import { SoundPlayer } from "../Util/SoundPlayer";
 
 export const ColorsArray = [
     "white",
@@ -37,8 +38,7 @@ interface PlayerStore {
 }
 
 // Play the win sound here
-const winAudio = new Audio("/sounds/win.wav");
-winAudio.volume = 0.5;
+const winAudio = new SoundPlayer({ path: "/sounds/win.wav", volume: 0.5 });
 
 export const usePlayerStore = create<PlayerStore>((set) => ({
     color: "white",
