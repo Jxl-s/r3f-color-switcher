@@ -20,10 +20,7 @@ export function LevelSelection() {
                             index > bestLevel && "opacity-50"
                         }`}
                         disabled={index > bestLevel}
-                        onClick={() => {
-                            toggleMenu();
-                            setLevel(index);
-                        }}
+                        onClick={() => setLevel(index)}
                     >
                         {index > bestLevel && "(LOCKED) "}
                         {index} - {level.name}

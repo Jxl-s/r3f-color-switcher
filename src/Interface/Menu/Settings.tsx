@@ -34,7 +34,7 @@ export function Settings() {
     return (
         <>
             <div className="text-white font-semibold text-xl">
-                Settings (TODO)
+                Settings
             </div>
             <div className="grid xl:grid-cols-2 gap-x-6 gap-y-2 mt-1">
                 <SettingToggle

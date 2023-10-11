@@ -60,6 +60,7 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
                 level: state.level + 1,
                 bestLevel: Math.max(state.level + 1, state.bestLevel),
                 intermission: false,
+                menuOpened: false,
                 color: "white",
             };
         }),
@@ -67,6 +68,7 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
     setLevel: (level) =>
         set({
             level,
+            menuOpened: false,
             intermission: false,
             color: "white",
         }),
