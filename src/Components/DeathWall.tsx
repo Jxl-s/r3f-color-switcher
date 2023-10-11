@@ -32,7 +32,7 @@ export default function DeathWall({ position, size }: Props) {
                 <meshStandardMaterial
                     color="white"
                     emissive={"#FF0000"}
-                    emissiveIntensity={5}
+                    emissiveIntensity={2}
                 />
             </Box>
         </RigidBody>

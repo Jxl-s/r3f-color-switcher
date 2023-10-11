@@ -1,5 +1,5 @@
 /* Load font faces */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -17,15 +17,32 @@ body,
     font-family: "Poppins", sans-serif;
 }
 
+body {
+    /* gradient from white to blue */
+    background: linear-gradient(225deg, #739ace 0%, #4c4d81 100%);
+}
+
 @keyframes TITLE_TEXT {
-    from {color: white;}
-    20% {color: orange;}
-    40% {color: greenyellow;}
-    60% {color: mediumpurple;}
-    80% {color: crimson;}
-    100% {color: white;}
+    from {
+        color: white;
+    }
+    20% {
+        color: orange;
+    }
+    40% {
+        color: greenyellow;
+    }
+    60% {
+        color: mediumpurple;
+    }
+    80% {
+        color: crimson;
+    }
+    100% {
+        color: white;
+    }
 }
 
 .game-title {
-    animation:  5s linear 0s infinite TITLE_TEXT;
+    animation: 5s linear 0s infinite TITLE_TEXT;
 }

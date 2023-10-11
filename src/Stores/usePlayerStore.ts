@@ -43,7 +43,7 @@ export const usePlayerStore = create<PlayerStore>((set) => ({
     intermission: false,
 
     finishLevel: () => {
-        winAudio.play();
+        if (!usePlayerStore.getState().intermission) winAudio.play();
         set({ intermission: true });
     },
     nextLevel: () =>

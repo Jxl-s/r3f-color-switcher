@@ -1,12 +1,5 @@
 import { RigidBody } from "@react-three/rapier";
-import {
-    ColorSwitch,
-    ColorWall,
-    Goal,
-    ObstacleWall,
-    Player,
-    DeathWall,
-} from "../Components";
+import { Goal, ObstacleWall, Player, DeathWall, JumpPad } from "../Components";
 import { Float, Text } from "@react-three/drei";
 
 export default function Level3() {
@@ -15,59 +8,54 @@ export default function Level3() {
             {/* Walls */}
             <RigidBody type="fixed" position-y={-0.5}>
                 <mesh receiveShadow>
-                    <boxGeometry args={[20, 1, 100]} />
+                    <boxGeometry args={[20, 1, 20]} />
                     <meshStandardMaterial color="white" metalness={0.3} />
                 </mesh>
             </RigidBody>
 
-            {/* Switches */}
-            <ColorSwitch position={[0, 0, -6]} color="crimson" />
-            <ColorSwitch position={[6, 0, -6]} color="greenyellow" />
-            <ColorSwitch position={[-6, 0, -6]} color="mediumpurple" />
+            <ObstacleWall position={[0, 4, -8]} size={[20, 8, 5]} />
+
+            {/* Lava platforms */}
+            <ObstacleWall position={[-4, 1, -16]} size={[5, 1, 5]} />
+            <ObstacleWall position={[4, 1, -28]} size={[5, 1, 5]} />
+            <ObstacleWall position={[-2, 1, -40]} size={[5, 1, 5]} />
+
+            <ObstacleWall position={[0, 1, -50]} size={[20, 1, 5]} />
+            <DeathWall position={[0, 0.5, -30.5]} size={[19, 1, 40]} />
+
+            {/* Goal */}
+            <Goal position={[0, 0, -55]} size={[20, 1, 5]} text="Level 3" />
+            <ObstacleWall position={[0, -1, -55]} size={[20, 1, 5]} />
+            <ObstacleWall position={[-10.5, 3.5, -52.5]} size={[1, 10, 10]} />
+            <ObstacleWall position={[10.5, 3.5, -52.5]} size={[1, 10, 10]} />
+            <ObstacleWall position={[0, 3.5, -58]} size={[22, 10, 1]} />
 
             <Float>
                 <Text
-                    position={[0, 2, -8]}
+                    position={[0, 4, -4]}
                     scale={0.5}
                     textAlign="center"
                     font="/fonts/Poppins/Poppins-Light.ttf"
                 >
-                    Use [Space] to jump
+                    Walk on the Jump Pad
+                    <meshBasicMaterial color="white" />
+                </Text>
+                <Text
+                    position={[0, 3, -4]}
+                    scale={0.5}
+                    textAlign="center"
+                    font="/fonts/Poppins/Poppins-Light.ttf"
+                >
+                    Tip: Use [Shift] to Sprint
                     <meshBasicMaterial color="white" />
                 </Text>
             </Float>
 
             {/* Walls */}
-            <ObstacleWall position={[0, 1, -10]} size={[20, 2, 1]} />
-            <ColorWall
-                position={[-5, 4, -10.5]}
-                size={[10, 4, 1]}
-                color="mediumpurple"
-            />
-
-            <ColorWall
-                position={[5, 4, -10.5]}
-                size={[10, 4, 1]}
-                color="greenyellow"
-            />
-            <ObstacleWall position={[0, 7, -10]} size={[20, 2, 1]} />
-
-            <ObstacleWall position={[-10, 4, -10]} size={[0.5, 8, 16]} />
-            <ObstacleWall position={[0, 4, -14.25]} size={[0.5, 8, 9.5]} />
-            <ObstacleWall position={[10, 4, -10]} size={[0.5, 8, 16]} />
-            <ObstacleWall position={[0, 4, -17.75]} size={[20, 9, 0.5]} />
-
-            <ObstacleWall position={[0, 8, -13.5]} size={[20.5, 1, 8]} />
+            <JumpPad position={[0, 0, -3]} />
 
             {/* Player */}
             <Player />
-            <Goal
-                position={[-5, 0, -14]}
-                size={[10, 1, 7.5]}
-                textScale={1}
-                text={"Level 3"}
-            />
-            <DeathWall position={[5, 0, -14]} size={[10, 1, 7.5]} />
         </>
     );
 }

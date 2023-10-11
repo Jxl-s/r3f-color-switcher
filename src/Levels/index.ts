@@ -17,10 +17,10 @@ export const Levels = [
         name: "Choices",
         component: Level2,
     },
-    // {
-    //     name: "Bounce",
-    //     component: Level3,
-    // },
+    {
+        name: "Bounce",
+        component: Level3,
+    },
     {
         name: "Work in Progress...",
         component: MoreToCome,
