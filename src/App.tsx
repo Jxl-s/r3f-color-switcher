@@ -7,6 +7,7 @@ import Effects from "./Effects";
 import { Interface } from "./Interface";
 import { Suspense } from "react";
 import { Leva } from "leva";
+import { Perf } from "r3f-perf";
 
 export default function App() {
     return (
@@ -27,7 +28,13 @@ export default function App() {
                 <Suspense fallback={null}>
                     <Leva hidden={window.location.hash !== "#debug"} />
                     <Canvas shadows>
-                        <Physics gravity={[0, -18, 0]} debug={window.location.hash === "#debug"}>
+                        {window.location.hash === "#debug" && (
+                            <Perf position="top-left" />
+                        )}
+                        <Physics
+                            gravity={[0, -18, 0]}
+                            debug={window.location.hash === "#debug"}
+                        >
                             <Lights />
                             <Effects />
                             <Experience />
