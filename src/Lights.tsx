@@ -8,7 +8,11 @@ export function Lights() {
     useFrame((state) => {
         if (!lightRef.current) return;
 
+        // Adjust light position
+        lightRef.current.position.y = state.camera.position.y - 4;
         lightRef.current.position.z = state.camera.position.z - 1;
+
+        // Adjust light target
         lightRef.current.target.position.z = state.camera.position.z - 2;
         lightRef.current.target.updateMatrixWorld();
     });

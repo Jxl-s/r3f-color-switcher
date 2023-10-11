@@ -1,5 +1,13 @@
 import { RigidBody } from "@react-three/rapier";
-import { Goal, ObstacleWall, Player, DeathWall, JumpPad, ColorSwitch, ColorWall } from "../Components";
+import {
+    Goal,
+    ObstacleWall,
+    Player,
+    DeathWall,
+    JumpPad,
+    ColorSwitch,
+    ColorWall,
+} from "../Components";
 import { Float, Text } from "@react-three/drei";
 
 export default function Level3() {
@@ -17,34 +25,36 @@ export default function Level3() {
 
             {/* Lava platforms */}
             <ColorWall
-                position={[-4, 1, -16]}
-                size={[5, 1, 5]}
-                color="mediumpurple"
-            />
-            <ColorWall
-                position={[4, 1, -28]}
-                size={[5, 1, 5]}
-                color="mediumpurple"
-            />
-            <ColorWall
-                position={[-2, 1, -40]}
-                size={[5, 1, 5]}
+                position={[0, 5, -25.5]}
+                size={[11, 1, 30]}
                 color="mediumpurple"
             />
 
-            <ColorSwitch position={[-5, 1.25, -17]} color="mediumpurple" />
-            <ColorSwitch position={[5, 1.25, -29]} color="mediumpurple" />
-            <ColorSwitch position={[-2, 1.25, -40]} color="mediumpurple" />
+            <ColorSwitch position={[0, 4.95, -16]} color="mediumpurple" />
+            <ColorSwitch position={[-2, 4.95, -15]} color="mediumpurple" />
+            <ColorSwitch position={[2, 4.95, -14]} color="mediumpurple" />
+            <ColorSwitch position={[4, 4.95, -15]} color="mediumpurple" />
 
-            <ObstacleWall position={[0, 1, -50]} size={[20, 1, 5]} />
-            <DeathWall position={[0, 0.5, -30.5]} size={[19, 1, 40]} />
+            <ColorSwitch position={[-4, 4.95, -26]} color="mediumpurple" />
+            <ColorSwitch position={[-2, 4.95, -23]} color="mediumpurple" />
+            <ColorSwitch position={[0, 4.95, -24]} color="mediumpurple" />
+            <ColorSwitch position={[4, 4.95, -25]} color="mediumpurple" />
+
+            <ColorSwitch position={[-4, 4.95, -31]} color="mediumpurple" />
+            <ColorSwitch position={[0, 4.95, -34]} color="mediumpurple" />
+            <ColorSwitch position={[2, 4.95, -35]} color="mediumpurple" />
+            <ColorSwitch position={[4, 4.95, -30]} color="mediumpurple" />
+
+            <DeathWall position={[0, 4, -25.5]} size={[20, 1, 30]} />
 
             {/* Goal */}
-            <Goal position={[0, 0, -55]} size={[20, 1, 5]} text="Level 3" />
-            <ObstacleWall position={[0, -1, -55]} size={[20, 1, 5]} />
-            <ObstacleWall position={[-10.5, 3.5, -52.5]} size={[1, 10, 10]} />
-            <ObstacleWall position={[10.5, 3.5, -52.5]} size={[1, 10, 10]} />
-            <ObstacleWall position={[0, 3.5, -58]} size={[22, 10, 1]} />
+            <Goal position={[0, 3, -43]} size={[20, 1, 5]} text="Level 3" />
+            <ObstacleWall position={[0, 4, -40.01]} size={[20, 5, 1]} />
+            <ObstacleWall position={[0, 2, -43]} size={[20, 1, 5]} />
+
+            <ObstacleWall position={[-10.5, 8, -40.5]} size={[1, 10, 10]} />
+            <ObstacleWall position={[10.5, 8, -40.5]} size={[1, 10, 10]} />
+            <ObstacleWall position={[0, 8, -46]} size={[22, 10, 1]} />
 
             <Float>
                 <Text
