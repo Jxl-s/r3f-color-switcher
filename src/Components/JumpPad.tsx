@@ -32,15 +32,18 @@ export default function JumpPad({ position }: Props) {
     const onEnter = (payload: IntersectionEnterPayload) => {
         if (!canUse) return;
         if (!padRef.current) return;
+        if (!payload.rigidBody) return;
 
-        const userData = payload.rigidBody?.userData as Record<string, unknown>;
+        const userData = payload.rigidBody.userData as Record<string, unknown>;
         if (userData?.type !== "player") return;
 
         // Apply a force to the player
         const body = payload.rigidBody;
         const force = { x: 0, y: 75, z: 0 };
 
-        body?.applyImpulse(force, true);
+        const linvel = body.linvel();
+        body.setLinvel({ x: linvel.x, y: 0, z: linvel.z }, true);
+        body.applyImpulse(force, true);
 
         setCanUse(false);
         setTimeout(() => setCanUse(true), 1000);
